@@ -13,6 +13,8 @@ while k<10:
     print("Hello bitchazzz") 
     k+=1
 
+
+# --- The conversation below has been archived for historical reasons ---
 # I really don't know anything
 # yes this is a very good idea
 #    i -= 1 #now the question is, is this going to keep on going infinitely? hahahha
@@ -58,3 +60,5 @@ while k<10:
  # i am not that good with interfaces
 
  #HUH?
+
+ # --- End archive ---
