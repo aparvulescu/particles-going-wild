@@ -15,22 +15,22 @@ i = 0
 
 for line in f.readlines():
     if line.startswith("TITLE") or line.startswith("VARIABLES") or line.startswith("DATAPACKING") or line.startswith("I="):
-        pass
+        continue
     if line.startswith("ZONE"):
         snapshot = int(line.split(' ')[2][:-2])
         print(f"Snapshot = {snapshot}")
-        pass
+        continue
     if line.startswith("STRANDID"):
         time = float(line.split('=')[2])
         times = np.append(times, time)
         print(f"Time = {time}")
-        pass
+        continue
     values = line.split(' ')
     # print(values)
     print(len(values))
     # id = values[8] # trackID
 
-        
+       
 
 f.close()
 
