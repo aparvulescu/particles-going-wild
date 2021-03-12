@@ -3,15 +3,6 @@ import matplotlib.pyplot as plt
 import scipy as sp
 from scipy import interpolate, integrate
 
-import numpy as np
-
-# Algorithm for the visualisation of the 3D positions of the paticles in time
-
-file_no = input("Select .dat file to import [integer between 0 and 2]: ")
-
-f = open("data\Case" + str(file_no) + ".dat", 'r')
-import numpy as np
-
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 
 file_no = input("Select .dat file to import [integer between 0 and 2]: ")
@@ -23,7 +14,7 @@ times = np.array([])
 snapshot = -1
 no_part = 0
 time = -1
-
+#hello
 
 for line in f.readlines():
     if line.startswith("TITLE") or line.startswith("VARIABLES") or line.startswith("DATAPACKING") or line.startswith(
