@@ -38,21 +38,21 @@ for particle in pos[0]:
         ok = 1
         continue
 
-    j = round(-(particle[3] - first[3]) / 35.)
-    i = round(sqrt((particle[1] - first[1])**2 + (particle[2] - first[2])**2) / 35.)
+    i = round(-(particle[3] - first[3]) / 35.)
+    j = round(sqrt((particle[1] - first[1])**2 + (particle[2] - first[2])**2) / 35.)
     if particle[1] - first[1] + particle[2] - particle[2] < 1:
-        i = -i
-
+        j = -j
+    '''
     if abs(i) > 6:
         i = 6 * np.sign(i)
     if abs(j) > 7:
         j = 7 * np.sign(j)
-
-    grid[6 + i, 7 + j] = particle[0]
+    '''
+    grid[6 + i][7 + j] = particle[0]
 
 # Updating (the rest)
 
 print("I am alive!")
-print(grid)
+# print(grid)
 
 

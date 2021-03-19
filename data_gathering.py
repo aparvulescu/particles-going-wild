@@ -18,12 +18,10 @@ def get_data(file_no):
             continue
         if line.startswith("ZONE"):
             snapshot = int(line.split(' ')[2][:-2])
-            # print(f"Snapshot = {snapshot}")
             continue
         if line.startswith("STRANDID"):
             time = float(line.split('=')[2])
             times = np.append(times, time)
-            # print(f"Time = {time}")
             continue
         values = line.split(' ')
         tid = int(values[8]) # trackID
@@ -43,12 +41,3 @@ def get_data(file_no):
     return data
 
 
-# file_no = input("Select .dat file to import [integer between 0 and 2]: ")
-
-# print(times)
-
-print(get_data(0))
-
-# data_now = get_data(1)
-
-# print(data_now[2][2])
