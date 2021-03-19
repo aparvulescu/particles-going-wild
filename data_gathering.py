@@ -47,7 +47,7 @@ def get_data(file_no):
 
 # print(times)
 
-# print(data[1540][6145])
+print(get_data(0))
 
 # data_now = get_data(1)
 

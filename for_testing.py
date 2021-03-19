@@ -1,3 +1,6 @@
+import numpy as np
+from data_gathering.py import get_data
+grid = np.zeros((13, 15))
+print(grid)
 
-a = [[0, 1, 2], [3, 4, 5]]
-print(len(a))
+print(data[i][2024][x])

@@ -22,7 +22,8 @@ from mpl_toolkits import mplot3d
 
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 
-file_no = input("Select .dat file to import [integer between 0 and 2]: ")
+# file_no = input("Select .dat file to import [integer between 0 and 2]: ")
+file_no = 1
 
 f = open("data\Case" + str(file_no) + ".dat", 'r')
 
@@ -64,8 +65,8 @@ for line in f.readlines():
 
 f.close()
 
-
-parameter = int(input('Which snapshot do you want to observe'))
+# parameter = int(input('Which snapshot do you want to observe'))
+parameter = 2
 
 
 i = 0
@@ -114,5 +115,7 @@ ax.set_title('Linear regression of airfoil')
 ax.set_xlabel('X-axis')
 ax.set_ylabel('Y-axis')
 ax.set_zlabel('Z-axis')
+
+
 
 plt.show()
