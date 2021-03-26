@@ -5,7 +5,8 @@ from scipy import interpolate, integrate
 
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 
-file_no = input("Select .dat file to import [integer between 0 and 2]: ")
+# file_no = input("Select .dat file to import [integer between 0 and 2]: ")
+file_no = 2
 
 f = open("data\Case" + str(file_no) + ".dat", 'r')
 
@@ -48,22 +49,44 @@ for line in f.readlines():
 f.close()
 
 
+track_id_file = open(f"data\TrackIDUpdate{file_no}.dat", 'r')
 
-parameter = input('Which parameter do you want to observe? (e.g.: x, y, u,v )')
-track = int(input('Which particle do you want to track?'))
+marker_tid_list = []
+
+for line in track_id_file.readlines():
+    marker_tid_list.append([])
+    numbers = line.split(' ')
+    numbers.remove('\n')
+    for number in numbers:
+        marker_tid_list[-1].append(int(number))
+        
+print(marker_tid_list[0])
+
+# parameter = input('Which parameter do you want to observe? (e.g.: x, y, u,v )')
+parameter = 'x'
+# track = int(input('Which particle do you want to track?'))
+marker_index = 42
+tracks = marker_tid_list[marker_index]
 para_lst = [ 'x' ,'y','z','u','v','w', 'V','ax','ay','az','a']
 parameter = para_lst.index(str(parameter))
+#sad
 
-i = 0
+
+
 y_value_lst = []
 time_lst = []
-while i < 5001:
-    if data[i][track][0] < int(-1):
-        y_value_lst.append(data[i][track][parameter])
-        time_lst.append(times[i])
-        i += 1
-    else:
-        i += 1
+
+print(tracks)
+
+for track in tracks:
+    i = 0
+    while i < 5001:
+        if data[i][track][0] < int(-1):
+            y_value_lst.append(data[i][track][parameter])
+            time_lst.append(times[i])
+            i += 1
+        else:
+            i += 1
 
 
 plt.plot(time_lst, y_value_lst , 'o-')

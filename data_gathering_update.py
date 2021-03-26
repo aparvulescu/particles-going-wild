@@ -12,7 +12,7 @@ def get_data(file_no):
     times = np.array([])
     max_snapshot = [100, 3626, 3626]
     track_id_per_snapshot = np.zeros((max_snapshot[file_no], 70))
-    grid = np.full_like(track_id_per_snapshot, -1)
+    track_id_per_snapshot = np.full_like(track_id_per_snapshot, -1)
     #track_id_per_snapshot_00 = np.zeros(max_snapshot[file_no])
     snapshot = -1
     no_part = 0
