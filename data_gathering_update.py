@@ -1,5 +1,5 @@
 import numpy as np
-import re
+#import re
 
 
 # Algorithm for the visualisation of the 3D positions of the paticles in time
