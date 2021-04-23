@@ -1,17 +1,9 @@
 import numpy as np
 
-file_no = 0
+A = np.array([[1, 2], [3, 4]])
 
-track_id_file = open(f"data\TrackIDUpdate{file_no}.dat", 'r')
-
-marker_tid_list = []
-
-for line in track_id_file.readlines():
-    marker_tid_list.append([])
-    numbers = line.split(' ')
-    numbers.remove('\n')
-    for number in numbers:
-        marker_tid_list[-1].append(int(number))
+AT = A.transpose()
+ATA = AT.dot(A)
         
-print(marker_tid_list[0])
+print(ATA)
 

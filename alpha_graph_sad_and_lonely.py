@@ -6,9 +6,11 @@ from math import *
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 #sad and lonely
 
+max_snapshot = [100, 3626, 3626]
+
 file_no = 1  # input("Select .dat file to import [integer between 0 and 2]: ")
 
-f = open("Case" + str(file_no) + ".dat", 'r')
+f = open("data\Case" + str(file_no) + ".dat", 'r')
 
 data = np.zeros((5001, 20001, 3))  # (snapshot, trackID, values)
 times = np.array([])
@@ -44,9 +46,36 @@ for line in f.readlines():
     # data[snapshot][tid][9] = values[11]  # z-acceleration (az)
     # data[snapshot][tid][10] = values[12]  # acceleration magnitude (|a|)
 
+g = open("data\TrackIDupdate" + str(file_no) + ".dat", 'r')
+
+marker_groups = []
+for line in g.readlines():
+    curr_marker = list(map(int, line[:-2].split(' ')))
+    marker_groups.append(curr_marker)
+
+g.close()
+# print(marker_groups)
+
+x_avg = []
+
+for marker in marker_groups:
+    no_x = 0
+    for snapshot in range(max_snapshot[file_no]):
+        for tid in marker:
+            x_pos = data[snapshot][tid][0]
+            y_pos = data[snapshot][tid][1]
+            if x_pos < 0:
+                no_x += 1
+    if no_x < 200:
+        for snapshot in range(max_snapshot[file_no]):
+            for tid in marker:
+                data[snapshot][tid] = 0
+                # data[snapshot][tid] = 0
+                # data[snapshot][tid]
+
 f.close()
 
-f0 = open("Case0.dat", 'r')
+f0 = open("data\Case0.dat", 'r')
 
 data0 = np.zeros((101, 20001, 3))  # (snapshot, trackID, values)
 times0 = np.array([])
@@ -111,8 +140,7 @@ for l in range(len(x_value_lst0)):
     z_mat0[l] = z_value_lst0[l]
 
 A_mat_T0 = A_mat0.transpose()
-ATA0 = [[sum(a * b for a, b in zip(A_mat_T0_row, A_mat0_col)) for A_mat0_col in zip(*A_mat0)] for A_mat_T0_row in
-        A_mat_T0]
+ATA0 =  A_mat_T0.dot(A_mat0)
 ATy0 = A_mat_T0.dot(z_mat0)
 ATA_inv0 = np.linalg.inv(ATA0)
 
@@ -123,7 +151,7 @@ x0 = np.outer(np.linspace(-1000, -600, 30), np.ones(30))
 y0 = x0.copy().T  # transpose
 z0 = a0[0] + a0[1] * x0 + a0[2] * y0
 
-parameter = 3625 #int(input('Which snapshot do you want to observe '))
+parameter = max_snapshot[file_no] #int(input('Which snapshot do you want to observe '))
 
 alpha_lst = []
 
@@ -153,7 +181,7 @@ for p in range(parameter):
         z_mat[j] = z_value_lst[j]
 
     A_mat_T = A_mat.transpose()
-    ATA = [[sum(a * b for a, b in zip(A_mat_T_row, A_mat_col)) for A_mat_col in zip(*A_mat)] for A_mat_T_row in A_mat_T]
+    ATA = A_mat_T.dot(A_mat)
     ATy = A_mat_T.dot(z_mat)
     ATA_inv = np.linalg.inv(ATA)
 
@@ -168,6 +196,11 @@ for p in range(parameter):
     cos_alpha = abs(a0[1] * a[1] + a0[2] * a[2] + 1 * 1) / (
                 sqrt(a0[1] ** 2 + a0[2] ** 2 + 1 ** 2) * sqrt(a[1] ** 2 + a[2] ** 2 + 1 ** 2))
 
+    # if a0[1] * a[1] + a0[2] * a[2] + 1 * 1 > 0:
+    #     alpha = acos(cos_alpha)
+    # else:
+    #     alpha = -acos(cos_alpha)
+    
     alpha = acos(cos_alpha)
     alpha_lst.append(degrees(alpha))
     if degrees(alpha) > 60:
