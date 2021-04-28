@@ -154,7 +154,7 @@ z0 = a0[0] + a0[1] * x0 + a0[2] * y0
 parameter = max_snapshot[file_no] #int(input('Which snapshot do you want to observe '))
 
 alpha_lst = []
-
+mega_e = np.array([])
 for p in range(parameter):
     i = 0
     x_value_lst = []
@@ -206,8 +206,8 @@ for p in range(parameter):
 
     print(e_vec[0], e_norm[0])
 
-    x = np.arange(-800, -400, 5)
-    y = np.arange(400, 500, 1.25)  # transpose
+    x = np.outer(np.linspace(-1000, -600, 30), np.ones(30))
+    y = x.copy().T  # transpose
     z = a[0] + a[1] * x + a[2] * y
 
     cos_alpha = abs(a0[1] * a[1] + a0[2] * a[2] + 1 * 1) / (
@@ -224,18 +224,11 @@ for p in range(parameter):
         print(p)
     # print(cos_alpha)
     # print('angle between two planes is: ', degrees(alpha))
+snapshot
+        
 
-    if p == 27:
-        fig = plt.figure()
-        ax = plt.axes(projection='3d')
-        ax.plot_surface(x, y, z)
-        ax.scatter(x_value_lst, y_value_lst, z_value_lst)
-        #ax.plot_surface(x0, y0, z0,cmap='gray',edgecolor='none')
-        ax.set_title('Linear regression of airfoil')
-        ax.set_xlabel('X-axis')
-        ax.set_ylabel('Y-axis')
-        ax.set_zlabel('Z-axis')
-        plt.show()
+plt.hist(mega_e, bins=20)
+plt.show()
 
 plt.plot(alpha_lst)
 plt.show()
