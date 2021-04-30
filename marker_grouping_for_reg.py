@@ -1,8 +1,8 @@
 import numpy as np
-from data_gathering.py import get_data
+from data_gathering import get_data
 
 #which file do you want to consider?
-file_no = 0
+file_no = 2
 max_snapshot = [100, 3626, 3626]
 
 g = open("data\TrackIDupdate" + str(file_no) + ".dat", 'r')
@@ -17,6 +17,7 @@ g.close()
 
 data = get_data(file_no)
 x_avg = []
+marker_groups_outlied = []
 
 for marker in marker_groups:
     x_sum = 0
@@ -29,6 +30,7 @@ for marker in marker_groups:
                 no_x += 1
     if no_x > 10:
         x_avg.append(x_sum / no_x)
+        marker_groups_outlied.append(marker)
     
 if len(marker_groups) != len(x_avg):
     print(f"Ha! We found {len(marker_groups) - len(x_avg)} outliers and removed them. You're welcome.\n")
@@ -81,12 +83,26 @@ body = []
 flap = []
 
 for i in range(int(length_sorted * 5 / 8)):
-    body.append(np.squeeze(np.where(x_new_avg == sorted_x_new_avg[i])))
+    body.append(int(np.where(x_new_avg == sorted_x_new_avg[i])[0]))
 
 for i in range(int(length_sorted * 5 / 8), int(length_sorted)):
-    flap.append(np.squeeze(np.where(x_new_avg == sorted_x_new_avg[i])))
+    flap.append(int(np.where(x_new_avg == sorted_x_new_avg[i])[0]))
 
 print(body)
 print(flap)
 
+flap_tid = []
 
+#print(np.array(marker_groups_outlied[0]))
+
+for i, marker in enumerate(groups):
+    if marker in flap:
+        flap_tid += marker_groups_outlied[i]
+
+stringo = ""
+for tid in flap_tid:
+    stringo += str(tid) + ' '
+
+write_file = open("data\FlapTID_" + str(file_no) + ".dat", 'w')
+write_file.write(stringo)
+write_file.close()
