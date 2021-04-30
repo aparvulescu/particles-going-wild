@@ -5,7 +5,7 @@ from math import *
 
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 max_snapshot = [100, 3626, 3626]
-file_no = 1  # input("Select .dat file to import [integer between 0 and 2]: ")
+file_no = 0  # input("Select .dat file to import [integer between 0 and 2]: ")
 
 print("Gathering data. Please wait...")
 

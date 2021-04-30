@@ -1,5 +1,5 @@
 import numpy as np
-from data_gathering import get_data
+from data_gathering.py import get_data
 
 #which file do you want to consider?
 file_no = 0
