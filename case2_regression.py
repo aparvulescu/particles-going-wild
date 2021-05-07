@@ -9,7 +9,7 @@ max_snapshot = [100, 3626, 3626]
 
 print("Gathering data. Please wait...")
 
-flap_file = open("data\FlapTID_2.dat")
+flap_file = open("data\\FlapTID_2.dat", 'r')
 
 flap_tid2 = []
 for line in flap_file.readlines():
@@ -17,7 +17,7 @@ for line in flap_file.readlines():
 
 flap_file.close()
 
-flap_file = open("data\FlapTID_1.dat")
+flap_file = open("data\\FlapTID_1.dat", 'r')
 
 flap_tid1 = []
 for line in flap_file.readlines():
@@ -27,7 +27,7 @@ flap_file.close()
 
 # print(flap_tid2)
 
-f = open("data\Case" + str(2) + ".dat", 'r')
+f = open("data\\Case" + str(2) + ".dat", 'r')
 
 data = np.zeros((5001, 20001, 2))  # (snapshot, trackID, values)
 times = np.array([])
@@ -67,7 +67,7 @@ for line in f.readlines():
 
 f.close()
 
-f1 = open("data\Case1.dat", 'r')
+f1 = open("data\\Case1.dat", 'r')
 
 data1 = np.zeros((3627, 20001, 2))  # (snapshot, trackID, values)
 times1 = np.array([])
@@ -106,7 +106,7 @@ for line1 in f1.readlines():
     # data0[snapshot][tid][9] = values[11]  # z-acceleration (az)
     # data0[snapshot][tid][10] = values[12]  # acceleration magnitude (|a|)
 
-g = open("data\TrackIDupdate" + str(1) + ".dat", 'r')
+g = open("data\\TrackIDupdate" + str(1) + ".dat", 'r')
 
 marker_groups = []
 for line in g.readlines():
@@ -275,9 +275,19 @@ for p in range(parameter):
     delta = atan2(a2[1]-a1[1], 1+a2[1]*a1[1])
     delta_lst.append(degrees(delta))
 
+delta_file = open("data\\delta_graph_case2.dat", 'w')
+for i in range(len(delta_lst)):
+    delta_file.write(f"{delta_lst[i]} ")
+
+delta_file.close()
+
 x = np.arange(0,parameter*0.01,0.01)
 y = np.sin(2*0.39*pi*x)*(-4)
 
 plt.plot(x, delta_lst)
+#plt.title('Angle of attack vs time for case 1')
+plt.xlabel('Time [s]')
+plt.ylabel('Angle of attack [degrees]')
+plt.grid(True, which='both')
 plt.plot(x, y)
 plt.show()

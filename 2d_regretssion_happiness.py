@@ -238,4 +238,8 @@ y = np.sin(2*0.39*pi*x)*(-4)
 
 plt.plot(x, alpha_lst)
 plt.plot(x, y)
+#plt.title('Angle of attack vs time for case 1')
+plt.xlabel('Time [s]')
+plt.ylabel('Angle of attack [degrees]')
+plt.grid(True, which='both')
 plt.show()

@@ -231,4 +231,8 @@ plt.hist(mega_e, bins=20)
 plt.show()
 
 plt.plot(alpha_lst)
+#plt.title('Angle of attack vs time for case 1')
+plt.xlabel('Time [s]')
+plt.ylabel('Angle of attack [degrees]')
+plt.grid(True, which='both')
 plt.show()
