@@ -5,7 +5,7 @@ from math import *
 
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 max_snapshot = [100, 3626, 3626]
-file_no = 0  # input("Select .dat file to import [integer between 0 and 2]: ")
+file_no = 1  # input("Select .dat file to import [integer between 0 and 2]: ")
 
 print("Gathering data. Please wait...")
 
@@ -232,6 +232,12 @@ for p in range(parameter):
     if degrees(alpha) > 30:
         print(p)
     print(f"Just finished snapshot {p}!")
+
+aoa_file = open("data\\aoa_graph_case1.dat", 'w')
+for i in range(len(alpha_lst)):
+    aoa_file.write(f"{alpha_lst[i]} ")
+
+aoa_file.close()
 
 x = np.arange(0,parameter*0.01,0.01)
 y = np.sin(2*0.39*pi*x)*(-4)
