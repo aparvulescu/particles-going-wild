@@ -11,7 +11,7 @@ dt = 0.01  # [s]
 
 print("Gathering data. Please wait...")
 
-file_angle = open("data\\aoa_graph_case1.dat", 'r')
+file_angle = open("data\\delta_graph_case2.dat", 'r')
 
 for line in file_angle.readlines():
     angle_lst = np.array(list(map(float, line[:-1].split(' '))))
@@ -76,10 +76,14 @@ val = a[0] * np.ones(parameter) + a[1] * np.sin(2*math.pi*f0*t_arr) + a[2] * np.
 
 print(a)
 
-plt.plot(t_arr, angle_lst)
-plt.plot(t_arr, val)
+fig, ax = plt.subplots()
+plt.xticks(fontsize=20)
+plt.yticks(fontsize=20)
+plt.plot(t_arr, angle_lst, label=r"Raw calculated $\delta$")
+plt.plot(t_arr, val, label=r"Sinusoidal fit of $\delta$")
+plt.legend(fontsize=20, loc="lower right")
 #plt.title('Angle of attack vs time for case 1')
-plt.xlabel('Time [s]')
-plt.ylabel('Angle of attack [degrees]')
+plt.xlabel('Time [s]', fontsize=24)
+plt.ylabel('Deflection angle [degrees]', fontsize=24)
 plt.grid(True, which='both')
 plt.show()
