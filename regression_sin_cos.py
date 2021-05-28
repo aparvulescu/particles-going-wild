@@ -11,7 +11,8 @@ dt = 0.01  # [s]
 
 print("Gathering data. Please wait...")
 
-file_angle = open("data\\delta_graph_case2.dat", 'r')
+file_angle = open("data\\aoa_graph_case1.dat", 'r')
+#file_angle = open("data\\delta_graph_case2.dat", 'r')
 
 for line in file_angle.readlines():
     angle_lst = np.array(list(map(float, line[:-1].split(' '))))
@@ -30,8 +31,9 @@ ones_arr = np.reshape(np.ones(parameter), (parameter, 1))
 A_mat = np.hstack((ones_arr, sin_arr, cos_arr))
 y_mat = np.reshape(angle_lst, (parameter, 1))
 
-# print(y_mat)
+print(np.shape(y_mat.T))
 
+t_arr_old = t_arr.copy()
 
 number_of_outliers = 1
 while number_of_outliers > 0:
@@ -68,18 +70,28 @@ while number_of_outliers > 0:
     
     A_mat = np.delete(A_mat, outliers_lst, 0)
     y_mat = np.delete(y_mat, outliers_lst, 0)
-    
+    t_arr = np.delete(t_arr, outliers_lst, 0)
 
 
 
-val = a[0] * np.ones(parameter) + a[1] * np.sin(2*math.pi*f0*t_arr) + a[2] * np.cos(2*math.pi*f0*t_arr)
+val = a[0] * np.ones(t_arr.shape[0]) + a[1] * np.sin(2*math.pi*f0*t_arr) + a[2] * np.cos(2*math.pi*f0*t_arr)
 
 print(a)
+print(np.shape(y_mat))
+y_vec = np.reshape(y_mat, t_arr.shape[0])
+print(np.shape(y_vec))
+print(np.shape(val))
+
+correlation_matrix = np.corrcoef(y_vec, val)
+correlation_xy = correlation_matrix[0,1]
+r_squared = correlation_xy**2
+
+print(r_squared)
 
 fig, ax = plt.subplots()
 plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
-plt.plot(t_arr, angle_lst, label=r"Raw calculated $\delta$")
+plt.plot(t_arr_old, angle_lst, label=r"Raw calculated $\delta$")
 plt.plot(t_arr, val, label=r"Sinusoidal fit of $\delta$")
 plt.legend(fontsize=20, loc="lower right")
 #plt.title('Angle of attack vs time for case 1')
