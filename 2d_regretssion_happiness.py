@@ -11,7 +11,7 @@ print("Gathering data. Please wait...")
 
 f = open("data\Case" + str(file_no) + ".dat", 'r')
 
-data = np.zeros((5001, 20001, 2))  # (snapshot, trackID, values)
+data = np.zeros((5001, 20001, 3))  # (snapshot, trackID, values)
 times = np.array([])
 snapshot = -1
 no_part = 0
@@ -36,6 +36,7 @@ for line in f.readlines():
     data[snapshot][tid][0] = values[0]  # x-position
     data[snapshot][tid][1] = values[1]  # y-position
     #data[snapshot][tid][2] = values[2]  # z-position
+    data[snapshot][tid][2] = values[3] # Mysterious I value
     # data[snapshot][tid][3] = values[4]  # x-velocity (u)
     # data[snapshot][tid][4] = values[5]  # y-velocity (v)
     # data[snapshot][tid][5] = values[6]  # z-velocity (w)
@@ -95,6 +96,7 @@ g.close()
 # print(marker_groups)
 
 x_avg = []
+i_deleted = []
 
 for marker in marker_groups:
     no_x = 0
@@ -164,12 +166,14 @@ for p in range(parameter):
     y_value_lst = []
     z_value_lst = []
     time_lst = []
+    i_value_lst = []
 
     while i < 20001:
         if data[p][i][0] < int(-1):
             x_value_lst.append(data[p][i][0])
             y_value_lst.append(data[p][i][1])
             #z_value_lst.append(data[p][i][2])
+            i_value_lst.append(data[p][i][2])
             i += 1
         else:
             i += 1
@@ -217,6 +221,14 @@ for p in range(parameter):
         x_value_lst = np.delete(x_value_lst, outliers_lst)
         y_value_lst = np.delete(y_value_lst, outliers_lst)
         
+
+        for index in outliers_lst:
+            i_deleted.append(i_value_lst[index])
+
+        i_value_lst = np.delete(i_value_lst, outliers_lst)
+
+
+        
         #print(number_of_outliers)
 
     x = np.outer(np.linspace(-1000, -600, 30), np.ones(30))
@@ -232,12 +244,15 @@ for p in range(parameter):
     if degrees(alpha) > 30:
         print(p)
     print(f"Just finished snapshot {p}!")
-
+'''
 aoa_file = open("data\\aoa_graph_case1.dat", 'w')
 for i in range(len(alpha_lst)):
     aoa_file.write(f"{alpha_lst[i]} ")
 
 aoa_file.close()
+'''
+
+print(i_deleted)
 
 x = np.arange(0,parameter*0.01,0.01)
 y = np.sin(2*0.39*pi*x)*(-4)
