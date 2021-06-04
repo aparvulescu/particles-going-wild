@@ -2,7 +2,7 @@ import numpy as np
 from data_gathering import get_data
 
 #which file do you want to consider?
-file_no = 2
+file_no = 1
 max_snapshot = [100, 3626, 3626]
 
 g = open("data\TrackIDupdate" + str(file_no) + ".dat", 'r')
@@ -40,7 +40,7 @@ if len(marker_groups) != len(x_avg):
 groups = np.full_like(np.zeros(len(x_avg)), -1)
 #print(groups)
 
-r = 10  # [mm]
+r = 2  # [mm]
 
 markers_left = x_avg.copy()
 curr_group_no = 0

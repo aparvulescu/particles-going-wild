@@ -11,8 +11,8 @@ dt = 0.01  # [s]
 
 print("Gathering data. Please wait...")
 
-file_angle = open("data\\aoa_graph_case1.dat", 'r')
-#file_angle = open("data\\delta_graph_case2.dat", 'r')
+#file_angle = open("data\\aoa_graph_case1.dat", 'r')
+file_angle = open("data\\delta_graph_case2.dat", 'r')
 
 for line in file_angle.readlines():
     angle_lst = np.array(list(map(float, line[:-1].split(' '))))
