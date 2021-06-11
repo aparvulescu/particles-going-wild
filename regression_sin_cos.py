@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 import math
+import statistics as stat
 
 # Algorithm for the visualisation of the 3D positions of the paticles in time
 max_snapshot = [100, 3626, 3626]
@@ -11,8 +12,8 @@ dt = 0.01  # [s]
 
 print("Gathering data. Please wait...")
 
-#file_angle = open("data\\aoa_graph_case1.dat", 'r')
-file_angle = open("data\\delta_graph_case2.dat", 'r')
+file_angle = open("data\\aoa_graph_case1.dat", 'r')
+#file_angle = open("data\\delta_graph_case2.dat", 'r')
 
 for line in file_angle.readlines():
     angle_lst = np.array(list(map(float, line[:-1].split(' '))))
@@ -87,15 +88,17 @@ correlation_xy = correlation_matrix[0,1]
 r_squared = correlation_xy**2
 
 print(r_squared)
+e_array = np.reshape(e_vec, e_vec.shape[0])
+print(f"Stddev: {stat.stdev(e_array)}")
 
 fig, ax = plt.subplots()
 plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
-plt.plot(t_arr_old, angle_lst, label=r"Raw calculated $\delta$")
-plt.plot(t_arr, val, label=r"Sinusoidal fit of $\delta$")
+plt.plot(t_arr_old, angle_lst, label=r"Raw calculated $\alpha$")
+plt.plot(t_arr, val, label=r"Sinusoidal fit of $\alpha$")
 plt.legend(fontsize=20, loc="lower right")
 #plt.title('Angle of attack vs time for case 1')
 plt.xlabel('Time [s]', fontsize=24)
-plt.ylabel('Deflection angle [degrees]', fontsize=24)
+plt.ylabel('Angle of attack [degrees]', fontsize=24)
 plt.grid(True, which='both')
 plt.show()
